@@ -3,20 +3,20 @@
 # We need to match on violations given the lookup table provided
 # by the sherpa team. Once matched, we can run a cross tab. 
 
-setwd("C:\\Users\\TBrown\\Documents\\food")
+setwd("//home/tbonza//projects//Food-Sherpa")
 library(sqldf)
 
 # load data for Boston & NYC
-# ny <- not working right now, will have to read & convert from json later 
-bo <- read.csv("BO\\Food_Establishment_Inspections.csv")
+ny <- read.csv("data//NY//Food_Service_Establishment__Last_Inspection.csv")
+bo <- read.csv("data//BO//Food_Establishment_Inspections.csv")
 
 # load data from food sherpa team (thanks Neal)
-sherpa <- read.csv("SHERPA\\MATCHED_violations.csv")
+sherpa <- read.csv("data//SHERPA//MATCHED_violations.csv")
 
 # SF provides 3 files but we really only need 'vioplus'
-bizplus <- read.csv("SF\\businesses_plus.csv")
-insplus <- read.csv("SF\\inspections_plus.csv")
-vioplus <- read.csv("SF\\violations_plus.csv")
+bizplus <- read.csv("data//SF//businesses_plus.csv")
+insplus <- read.csv("data//SF//inspections_plus.csv")
+vioplus <- read.csv("data//SF//violations_plus.csv")
 
 # create a subset of NY, BO, and SF data for only 2014
 
@@ -37,16 +37,11 @@ summary(bo2014$year)
 
 
 # NY needs a year column too
-summary(as.numeric(substr(ny$GRADE.DATE, 7,10)))
-year <- as.numeric(substr(ny$GRADE.DATE, 7,10))
+summary(as.numeric(substr(ny$LAST.INSPECTED, 7, 10)))
+year <- as.numeric(substr(ny$LAST.INSPECTED, 7, 10))
 ny <- cbind(ny, year)
 ny2014 <- ny[ny$year == 2014,]
 summary(ny2014$year)
-
-# we need to spend some more time on NY, their csv file is formatted
-# incorrectly. 
-
-
 
 # We need to check our lookup table from sherpa team to see if it 
 # actually matches descriptions in the provided data.
@@ -85,6 +80,14 @@ summary(duplicated(sherpa$BO_ViolDesc))
 
 # check the match percent: about 70%
 descMatchPercent(sherpa$BO_ViolDesc, bo2014$ViolDesc)
+
+# NY 
+
+# checking for duplicates
+summary(duplicated(ny$VIOLATIONS))
+
+# check the match percent: 
+descMatchPercent(sherpa$NY_ViolDesc, ny$VIOLATIONS)
 
 
 
