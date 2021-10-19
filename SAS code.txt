@@ -4,13 +4,13 @@
 
 
 
-libname a 'P:\public_users\njawadekar\Work';
+libname a 'C:\users\njawadekar\';
   
   
 /* Importing the csv */
 data a.fidata;
   
-  infile 'P:\public_users\njawadekar\Work\FI.csv'  dlm=',' dsd missover firstobs=2;
+  infile 'C:\users\njawadekar\FI.csv'  dlm=',' dsd missover firstobs=2;
 
 
   attrib
@@ -207,13 +207,13 @@ run;
 /* Exporting a.Fidata7 & a.Grades1 to tab-delimited .txt files */
 
 proc export data = a.Fidata7
-     outfile = 'P:\public_users\njawadekar\Work\Violations.txt'
+     outfile = 'C:\users\njawadekar\Violations.txt'
 	 dbms = tab;
 	 run;
 
 
 	 proc export data = a.Grades1
-	 outfile = 'P:\public_users\njawadekar\Work\Grades.txt'
+	 outfile = 'C:\users\njawadekar\Grades.txt'
 	 dbms = tab;
 	 run;
 
